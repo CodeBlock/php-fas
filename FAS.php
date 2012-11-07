@@ -82,7 +82,7 @@ class FAS {
     $this->debug = $debug_level;
     return $this;
   }
-  
+
   /**
    * Try to authenticate with the FAS server.
    *
@@ -103,14 +103,13 @@ class FAS {
       CURLOPT_URL,
       $this->fas_url.'/json/person_by_username?tg_format=json');
     curl_setopt($this->curl, CURLOPT_POST, true);
+    curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->curl, CURLOPT_USERAGENT, $this->user_agent);
     curl_setopt(
       $this->curl,
       CURLOPT_POSTFIELDS,
-      "username=".urlencode($username)."&user_name=".urlencode($username).
-      "&password=".urlencode($password)."&login=Login");
-    curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
-    
+      'username='.$username.'&user_name='.$username.
+      '&password='.$password.'&login=Login');
   }
 
   /**
