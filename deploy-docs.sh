@@ -11,3 +11,4 @@ pushd $uid
   git commit -m "Deploying documentation at `date`"
   git push origin gh-pages
 popd
+rm -rf $uid
