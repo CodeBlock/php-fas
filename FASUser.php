@@ -9,7 +9,7 @@
  */
 class FASUser {
   protected $username;
-  protected $real_name;
+  protected $human_name;
   protected $groups = array();
   protected $ssh_key;
   protected $gpg_key;
@@ -25,12 +25,12 @@ class FASUser {
   }
 
   /**
-   * Set the real name of the representation of the FAS user.
+   * Set the real/human name of the representation of the FAS user.
    *
    * @task setter
    */
-  public function setRealName($real_name) {
-    $this->real_name = $real_name;
+  public function setHumanName($human_name) {
+    $this->human_name = $human_name;
     return $this;
   }
 
