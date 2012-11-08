@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__).'/util.php';
+
 /**
  * This class contains methods for trying to authenticate with FAS.
  *
