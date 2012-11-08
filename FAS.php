@@ -91,7 +91,7 @@ class FAS {
    * Try to authenticate with the FAS server.
    *
    * We internally run the password through urlencode, so **do not** do that
-   * before calling `authenticate()`.p
+   * before calling `authenticate()`.
    *
    * @task authentication
    * @param string The username **or email address** of the person
