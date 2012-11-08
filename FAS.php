@@ -75,8 +75,8 @@ class FAS {
    * @param integer The debug level. 0=off, 1=error log, 2=echo.
    */
   public function setDebug($debug_level) {
-    if (gettype($debug_level) != 'integer' || !$debug_level > 0 ||
-      !$debug_level < 3) {
+    if (gettype($debug_level) != 'integer' || $debug_level < 0 ||
+      $debug_level > 2) {
       throw new Exception('Debug level should be an integer, 0 thru 2.');
     }
     $this->debug = $debug_level;
@@ -95,21 +95,51 @@ class FAS {
    * @return wild Returns false if authentication was unsuccessful, or
    *   a FASUser instance, if the user successfully authenticated.
    */
-  public static function authenticate($username, $password) {
+  public function authenticate($username, $password) {
     $username = urlencode(strtolower($username));
     $password = urlencode($password);
     curl_setopt(
       $this->curl,
       CURLOPT_URL,
-      $this->fas_url.'/json/person_by_username?tg_format=json');
+      $this->fas_url.'/user/view?tg_format=json');
     curl_setopt($this->curl, CURLOPT_POST, true);
     curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($this->curl, CURLOPT_USERAGENT, $this->user_agent);
     curl_setopt(
       $this->curl,
       CURLOPT_POSTFIELDS,
-      'username='.$username.'&user_name='.$username.
-      '&password='.$password.'&login=Login');
+      'user_name='.$username.'&password='.$password.'&login=Login');
+
+    if ($this->debug != 0) {
+      curl_setopt($this->curl, CURLOPT_VERBOSE, true);
+
+      if ($this->debug == 2 && php_sapi_name() != 'cli') {
+        $this->debug_log(
+          'Curl verbosity is set, see your error log for its output.');
+      }
+    }
+
+    $result = curl_exec($this->curl);
+    if ($result === false) {
+      throw new Exception(
+        'A problem occurred while trying to communicate with FAS.');
+    }
+
+    if ($this->validate_authentication($result)) {
+      // Spawn a new FASUser.
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Determine if authentication was successful, given curl's result.
+   *
+   * @param string The output from Curl's POST to FAS.
+   * @return boolean Whether or not authentication was a success.
+   */
+  private function validate_authentication($curl_result) {
+    echo $curl_result;
   }
 
   /**
@@ -118,8 +148,12 @@ class FAS {
    * @param string The message to be logged.
    */
   private function debug_log($message) {
-    if ($this->debug) {
-      echo date('[h:m:s a] ').$message."\n";
+    $log_entry = date('[h:m:s a] ').$message."\n";
+    switch ($this->debug) {
+      case 1:
+        error_log($log_entry);
+      case 2:
+        echo $log_entry;
     }
     return;
   }
