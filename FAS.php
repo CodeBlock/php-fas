@@ -36,6 +36,7 @@ class FAS {
    * Set the URL to the FAS instance being authed against.
    * Strip any ending slashes.
    *
+   * @task setter
    * @param string The URL to authenticate against.
    */
   public function setFasUrl($url) {
@@ -48,6 +49,7 @@ class FAS {
    * Change whether or not SSL certificates are checked for validity and
    *   authenticity.
    *
+   * @task setter
    * @param boolean Whether or not we should be strict with SSL checks.
    */
   public function setStrictSsl($strictness) {
@@ -58,6 +60,7 @@ class FAS {
   /**
    * Set the user agent to identify to FAS as.
    *
+   * @task setter
    * @param string The User-Agent to use.
    */
   public function setUserAgent($user_agent) {
@@ -72,6 +75,7 @@ class FAS {
    * **WARNING:** There is a potential for sensitive information to be logged.
    *   This should **never** //ever// be enabled in production.
    *
+   * @task setter
    * @param integer The debug level. 0=off, 1=error log, 2=echo.
    */
   public function setDebug($debug_level) {
@@ -89,6 +93,7 @@ class FAS {
    * We internally run the password through urlencode, so **do not** do that
    * before calling `authenticate()`.p
    *
+   * @task authentication
    * @param string The username **or email address** of the person
    *   authenticating.
    * @param string The password of the person authenticating.
@@ -135,6 +140,7 @@ class FAS {
   /**
    * Determine if authentication was successful, given curl's result.
    *
+   * @task authentication
    * @param string The output from Curl's POST to FAS.
    * @return boolean Whether or not authentication was a success.
    */
@@ -145,6 +151,7 @@ class FAS {
   /**
    * Print a timestampped debug message, if we're in debug mode.
    *
+   * @task debug
    * @param string The message to be logged.
    */
   private function debug_log($message) {
