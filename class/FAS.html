@@ -17,12 +17,13 @@
 <tr><th>Group</th><td><span class="atom-group">fas</span></td></tr></table><div class="doc-markup"><p>This class contains methods for trying to authenticate with FAS.</p></div><h2>Tasks</h2><div class="atom-task-list"><h4>Unspecified</h4>
 <ul>
 <li><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <a href="#method_construct" class="atom-symbol">__construct()</a></li>
-<li><span class="atom-attributes"><span class="atom-attribute-public">public</span> <span class="atom-attribute-static">static</span></span> <a href="#method_authenticate" class="atom-symbol">authenticate()</a></li>
+<li><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <a href="#method_authenticate" class="atom-symbol">authenticate()</a></li>
 <li><span class="atom-attributes"><span class="atom-attribute-private">private</span></span> <a href="#method_debug_log" class="atom-symbol">debug_log()</a></li>
 <li><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <a href="#method_setDebug" class="atom-symbol">setDebug()</a></li>
 <li><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <a href="#method_setFasUrl" class="atom-symbol">setFasUrl()</a></li>
 <li><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <a href="#method_setStrictSsl" class="atom-symbol">setStrictSsl()</a></li>
 <li><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <a href="#method_setUserAgent" class="atom-symbol">setUserAgent()</a></li>
+<li><span class="atom-attributes"><span class="atom-attribute-private">private</span></span> <a href="#method_validate_authentication" class="atom-symbol">validate_authentication()</a></li>
 </ul></div><h2>Methods</h2><h3><a name="method_construct"></a><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <span class="atom-return-type">this</span> __construct(<span class="atom-parameters"></span>)</h3>
 <table class="atom-param-table"><tr class="atom-param-table-return"><td class="atom-param-table-group">return</td><td class="atom-param-type">this</td><td class="atom-param-name"></td><td></td></tr></table>
 <div class="doc-markup"><p>Construct an instance of FAS.</p>
@@ -33,7 +34,7 @@
   <span class="k">protected</span> <span class="nv">$a</span> <span class="o">=</span> <span class="mi">123</span><span class="o">;</span> <span class="c">// This is fine.</span>
   <span class="k">protected</span> <span class="nv">$b</span> <span class="o">=</span> <span class="nf" data-symbol-name="curl_init">curl_init</span><span class="o">();</span> <span class="c">// This is not, it contains parentheses.</span>
 <span class="o">}</span></pre></div></div>
-<h3><a name="method_authenticate"></a><span class="atom-attributes"><span class="atom-attribute-public">public</span> <span class="atom-attribute-static">static</span></span> <span class="atom-return-type">wild</span> authenticate(<span class="atom-parameters"><span class="atom-parameter-name">$username</span>, <span class="atom-parameter-name">$password</span></span>)</h3>
+<h3><a name="method_authenticate"></a><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <span class="atom-return-type">wild</span> authenticate(<span class="atom-parameters"><span class="atom-parameter-name">$username</span>, <span class="atom-parameter-name">$password</span></span>)</h3>
 <table class="atom-param-table"><tr><td class="atom-param-table-group">parameters</td><td class="atom-param-type">string</td><td class="atom-param-name">$username</td><td>The username <strong>or email address</strong> of the person authenticating.</td></tr>
 <tr><td class="atom-param-table-group"></td><td class="atom-param-type">string</td><td class="atom-param-name">$password</td><td>The password of the person authenticating.</td></tr>
 <tr class="atom-param-table-return"><td class="atom-param-table-group">return</td><td class="atom-param-type">wild</td><td class="atom-param-name"></td><td>Returns false if authentication was unsuccessful, or a FASUser instance, if the user successfully authenticated.</td></tr></table>
@@ -66,7 +67,11 @@ Strip any ending slashes.</p></div>
 <h3><a name="method_setUserAgent"></a><span class="atom-attributes"><span class="atom-attribute-public">public</span></span> <span class="atom-return-type"></span> setUserAgent(<span class="atom-parameters"><span class="atom-parameter-name">$user_agent</span></span>)</h3>
 <table class="atom-param-table"><tr><td class="atom-param-table-group">parameters</td><td class="atom-param-type">string</td><td class="atom-param-name">$user_agent</td><td>The User-Agent to use.</td></tr>
 <tr class="atom-param-table-return"><td class="atom-param-table-group">return</td><td class="atom-param-type">wild</td><td class="atom-param-name"></td><td></td></tr></table>
-<div class="doc-markup"><p>Set the user agent to identify to FAS as.</p></div></div>
+<div class="doc-markup"><p>Set the user agent to identify to FAS as.</p></div>
+<h3><a name="method_validate_authentication"></a><span class="atom-attributes"><span class="atom-attribute-private">private</span></span> <span class="atom-return-type">boolean</span> validate_authentication(<span class="atom-parameters"><span class="atom-parameter-name">$curl_result</span></span>)</h3>
+<table class="atom-param-table"><tr><td class="atom-param-table-group">parameters</td><td class="atom-param-type">string</td><td class="atom-param-name">$curl_result</td><td>The output from Curl&#039;s POST to FAS.</td></tr>
+<tr class="atom-param-table-return"><td class="atom-param-table-group">return</td><td class="atom-param-type">boolean</td><td class="atom-param-name"></td><td>Whether or not authentication was a success.</td></tr></table>
+<div class="doc-markup"><p>Determine if authentication was successful, given curl&#039;s result.</p></div></div>
         <div style="clear: both;"></div>
       </div>
     </div>
