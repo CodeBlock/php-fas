@@ -11,6 +11,7 @@ class FAS {
   protected $debug = 0;
   protected $strict_ssl = true;
   protected $user_agent = 'php-fas v1.0.0';
+  protected $response;
 
   /**
    * Construct an instance of FAS.
@@ -124,28 +125,19 @@ class FAS {
       }
     }
 
-    $result = curl_exec($this->curl);
-    if ($result === false) {
+    $this->response = curl_exec($this->curl);
+    if ($this->response === false) {
       throw new Exception(
         'A problem occurred while trying to communicate with FAS.');
     }
 
-    if ($this->validate_authentication($result)) {
+    $this->response = json_decode($this->response);
+    if (isset($this->response->{'person'})) {
       // Spawn a new FASUser.
+      return true;
     } else {
       return false;
     }
-  }
-
-  /**
-   * Determine if authentication was successful, given curl's result.
-   *
-   * @task authentication
-   * @param string The output from Curl's POST to FAS.
-   * @return boolean Whether or not authentication was a success.
-   */
-  private function validate_authentication($curl_result) {
-    echo $curl_result;
   }
 
   /**

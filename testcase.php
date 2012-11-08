@@ -14,4 +14,5 @@ system('stty echo');
 echo "Here we go. Good luck!\n";
 
 $fas = (new FAS())->setDebug(2);
-echo $fas->authenticate($username, $password);
+echo $fas->authenticate($username, $password) ? 'OK' : 'Failed';
+echo "\n";
