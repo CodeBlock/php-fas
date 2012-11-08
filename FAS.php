@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(__FILE__).'/util.php';
+require_once dirname(__FILE__).'/FASUser.php';
 
 /**
  * This class contains methods for trying to authenticate with FAS.
@@ -135,8 +136,12 @@ class FAS {
 
     $this->response = json_decode($this->response);
     if (isset($this->response->{'person'})) {
-      // Spawn a new FASUser.
-      return true;
+      $user = id(new FASUser())
+        ->setUsername($this->response->person->username)
+        ->setHumanName($this->response->person->human_name)
+        ->setSshKey($this->response->person->ssh_key)
+        ->setGpgKey($this->response->person->gpg_keyid);
+      return $user;
     } else {
       return false;
     }
