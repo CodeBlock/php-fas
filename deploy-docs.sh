@@ -10,7 +10,7 @@ pushd $uid
   git rm -rf $uid/*
   mv $uid2/* .  
   git add .
-  git commit -m "Deploying documentation at `date`"
+  git commit -m "Deploying documentation at `date` [irc skip]"
   git push origin gh-pages
 popd
 rm -rf $uid $uid2
