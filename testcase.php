@@ -18,8 +18,12 @@ $fas = id(new FAS())
   ->setUsername($username)
   ->setPassword($password);
 $user = $fas->authenticate();
-$user ? 'OK' : 'Failed';
-echo "\n";
+
+if ($user === false) {
+  echo "Authentication failed.\n";
+  // Safe to exit here, curl already closed the connection.
+  exit(1);
+}
 
 echo "You are in the following groups:\n";
 foreach ($user->getGroups() as $group_name => $group) {
