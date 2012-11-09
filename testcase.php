@@ -23,5 +23,5 @@ echo "\n";
 
 echo "You are in the following groups:\n";
 foreach ($user->getGroups() as $group_name => $group) {
-  echo $group_name."\n";
+  echo $group_name.' - '.$group->display_name."\n";
 }
