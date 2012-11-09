@@ -13,6 +13,15 @@ system('stty echo');
 
 echo "Here we go. Good luck!\n";
 
-$fas = id(new FAS())->setDebug(2);
-echo $fas->authenticate($username, $password) ? 'OK' : 'Failed';
+$fas = id(new FAS())
+  ->setDebug(2)
+  ->setUsername($username)
+  ->setPassword($password);
+$user = $fas->authenticate();
+$user ? 'OK' : 'Failed';
 echo "\n";
+
+echo "You are in the following groups:\n";
+foreach ($user->getGroups() as $group_name => $group) {
+  echo $group_name."\n";
+}

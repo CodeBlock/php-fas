@@ -15,6 +15,8 @@ class FAS {
   protected $strict_ssl = true;
   protected $user_agent = 'php-fas v1.0.0';
   protected $response;
+  private $username;
+  private $password;
 
   /**
    * Construct an instance of FAS.
@@ -92,6 +94,28 @@ class FAS {
   }
 
   /**
+   * Set the username of the user authenticating.
+   *
+   * @task setter
+   * @param string The username of the user.
+   */
+  public function setUsername($username) {
+    $this->username = $username;
+    return $this;
+  }
+
+  /**
+   * Set the password of the user authenticating.
+   *
+   * @task setter
+   * @param string The password of the user.
+   */
+  public function setPassword($password) {
+    $this->password = $password;
+    return $this;
+  }
+
+  /**
    * Try to authenticate with the FAS server.
    *
    * We internally run the password through urlencode, so **do not** do that
@@ -104,9 +128,9 @@ class FAS {
    * @return wild Returns false if authentication was unsuccessful, or
    *   a FASUser instance, if the user successfully authenticated.
    */
-  public function authenticate($username, $password) {
-    $username = urlencode(strtolower($username));
-    $password = urlencode($password);
+  public function authenticate() {
+    $username = urlencode(strtolower($this->username));
+    $password = urlencode($this->password);
     curl_setopt(
       $this->curl,
       CURLOPT_URL,
@@ -141,6 +165,9 @@ class FAS {
         ->setHumanName($this->response->person->human_name)
         ->setSshKey($this->response->person->ssh_key)
         ->setGpgKey($this->response->person->gpg_keyid);
+      foreach ($this->response->person->approved_memberships as $group) {
+        $user->appendGroup($group);
+      }
       return $user;
     } else {
       return false;
