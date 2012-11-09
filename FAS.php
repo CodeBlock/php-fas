@@ -153,6 +153,7 @@ class FAS {
     }
 
     $this->response = curl_exec($this->curl);
+    curl_close($this->curl);
     if ($this->response === false) {
       throw new Exception(
         'A problem occurred while trying to communicate with FAS.');
