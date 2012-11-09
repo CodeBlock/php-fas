@@ -25,6 +25,15 @@ class FASUser {
   }
 
   /**
+   * Get the username of the representation of the FAS user.
+   *
+   * @task getter
+   */
+  public function getUsername() {
+    return $this->username;
+  }
+
+  /**
    * Set the real/human name of the representation of the FAS user.
    *
    * @task setter
@@ -35,13 +44,31 @@ class FASUser {
   }
 
   /**
+   * Get the human name of the representation of the FAS user.
+   *
+   * @task getter
+   */
+  public function getHumanName() {
+    return $this->human_name;
+  }
+
+  /**
    * Appends a group to the `groups` array of arrays.
    *
    * @task setter
    */
   public function appendGroup($group) {
-    $this->groups[] = $group;
+    $this->groups[$group->name] = $group;
     return $this;
+  }
+
+  /**
+   * Get the list of groups that the user is in.
+   *
+   * @task getter
+   */
+  public function getGroups() {
+    return $this->groups;
   }
 
   /**
@@ -55,6 +82,15 @@ class FASUser {
   }
 
   /**
+   * Get the ssh of the representation of the FAS user.
+   *
+   * @task getter
+   */
+  public function getsshKey() {
+    return $this->ssh_key;
+  }
+
+  /**
    * Set the gpg key id of the representation of the FAS user.
    *
    * @task setter
@@ -62,5 +98,14 @@ class FASUser {
   public function setGpgKey($gpg_key) {
     $this->gpg_key = $gpg_key;
     return $this;
+  }
+
+  /**
+   * Get the gpg key id of the representation of the FAS user.
+   *
+   * @task getter
+   */
+  public function getGpgKey() {
+    return $this->gpg_key;
   }
 }
