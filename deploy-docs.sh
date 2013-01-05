@@ -8,7 +8,7 @@ pushd $uid
   git checkout gh-pages
   mv docs/ $uid2
   git rm -rf $uid/*
-  mv $uid2/* .  
+  mv $uid2/* .
   git add .
   git commit -m "Deploying documentation at `date` [irc skip]"
   git push origin gh-pages
