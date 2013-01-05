@@ -10,11 +10,10 @@ echo 'Password: ';
 system('stty -echo');
 $password = chop(fgets(STDIN));
 system('stty echo');
-
-echo "Here we go. Good luck!\n";
+echo "\n";
 
 $fas = id(new FAS())
-  ->setDebug(2)
+//  ->setDebug(2)
   ->setUsername($username)
   ->setPassword($password);
 $user = $fas->authenticate();
